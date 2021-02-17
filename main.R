@@ -1,4 +1,4 @@
-setwd("W:/cours/M1_MA/Projet202")
+setwd("C:\Users\caill\Documents\Projet")
 rm(list=objects())
 
 library(tidyverse)
