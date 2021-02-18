@@ -1,4 +1,4 @@
-setwd("C:\Users\caill\Documents\Projet")
+setwd("C:/Users/caill/Documents/Projet")
 rm(list=objects())
 
 library(tidyverse)
@@ -19,10 +19,7 @@ range(data_train$Date)
 train_x_times_serie <- xts(data_train$Load,order.by = data_train$Date)
 plot(train_x_times_serie, ylab = "consomation en MW", xlab = "date", type = "l", col = "red")
 
-
-
 a <- acf(train_x_times_serie, lag.max=336, type="correlation")
-
 
 #######################################################################################
 #____________________________________Moyenne__________________________________________#
