@@ -2,7 +2,7 @@ setwd("C:\Users\caill\Documents\Projet")
 rm(list=objects())
 
 library(tidyverse)
-library(lubridate)
+library(lubridata_train$Date)
 library(xts)
 
 data_train <- read_delim(file = "data/train.csv", delim=",")
@@ -10,22 +10,12 @@ data_test <- read_delim(file = "data/test.csv", delim=",")
 
 
 names(data_train)
-range(data_train$Date)
+range(data_train$data_train$Date)
 
-n = length(Date)
+n = length(data_train$Date)
 t = c(1:n)
 
-Tt = t/20 + 1
-omega = 2*pi/50
-St = cos(omega*t) + sin(omega*t)
-noise = rnorm(n,0,1)
-
-Xt = Tt + St + noise
-Yt = Tt + St
-
-Xt = xts(Xt, order.by = Date)
-Yt = xts(Yt, order.by = Date)
-Tt = xts(Tt, order.by = Date)
+Xt = xts(data_train$Load, order.by = data_train$Date)
 
 #_______Affichage________#
 png(file = "Exo1_plot.png", width=600, height=350)
@@ -57,12 +47,12 @@ dev.off()
 #________________________________moyenne mobile ______________________________________#
 #######################################################################################
 MovingAverage_trend = stats::filter(Xt, 
-                                    filter = array(1/10, dim=10),
+                                    filter = array(1/100, dim=10),
                                     method = c('convolution'),
                                     sides = 2,
                                     circular = FALSE)
 
-MovingAverage_trend = xts(MovingAverage_trend, order.by = Date)
+MovingAverage_trend = xts(MovingAverage_trend, order.by = data_train$Date)
 #_______Affichage________#
 png(file = "Exo1_MoyMobile.png", width=600, height=350)
 plot(Xt, type='l', col = "purple", xlab = "Annee")
@@ -86,7 +76,7 @@ kernel_trend = sapply(x,kernel_smooth)
 #_______Affichage________#
 png(file = "Exo1_Gaussien.png", width=600, height=350)
 plot(Xt, type='l', col = "purple", xlab = "Annee")
-lines(xts(kernel_trend,order.by = Date),col='red', lwd=2)
+lines(xts(kernel_trend,order.by = data_train$Date),col='red', lwd=2)
 addLegend(legend.loc = "topleft", legend.names = c("Xt", 'Noyau Gaussien'),
           col = c("purple","red"),lty = c(1, 1) )
 dev.off()
@@ -95,12 +85,13 @@ dev.off()
 #_______________________________Polynômes locaux______________________________________#
 #######################################################################################
 
+
 lo = loess(Xt ~ t, degree = 2, span = 0.7)
 poly_trend = lo$fitted
 #_______Affichage________#
 png(file = "Exo1_PolLoc.png", width=600, height=350)
 plot(Xt, type='l', col = "purple", xlab = "Annee")
-lines(xts(poly_trend,order.by = Date),col='red', lwd=2)
+lines(xts(poly_trend,order.by = data_train$Date),col='red', lwd=2)
 addLegend(legend.loc = "topleft", legend.names = c("Xt", 'Polynômes locaux'),
           col = c("purple","red"),lty = c(1, 1) )
 dev.off()
