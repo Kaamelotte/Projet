@@ -1,4 +1,4 @@
-setwd("C:/Users/caill/Documents/Projet")
+#setwd("C:\Users\caill\Documents\GitHub\SIM202-Projet")
 rm(list=objects())
 
 library(tidyverse)
@@ -61,25 +61,6 @@ plot(data_train$Date, data_train$Temp, type = "l", col = "red")
 #conso en fct température
 plot(data_train$Temp, data_train$Load, xlab = "Température (°C)", ylab = "Consommation (MW)", pch = "x", col = "blue")
 title("Consomation")
-
-
-
-
-
-
-
-reglin = lm(formula = Load~Temp, data = data_train)
-
-#points(data_train$Temp, reglin$fitted.values, col = "red")
-
-#plot(data_train$toy, data_train$Load, pch = 20)
-
-#cor(data_train$Temp, data_train$Load)
-
-#acf(data_train$Load, lag.max = 52*7)
-
-#d_b = length(data_train$Date)-31*2
-#plot( data_train$GovernmentResponseIndex[d_b:length((data_train$Date))] )
 
 
 
